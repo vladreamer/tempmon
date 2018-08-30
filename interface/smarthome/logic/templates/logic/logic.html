@@ -1,0 +1,26 @@
+{% extends "monitor/header.html" %}
+{% block content %}
+   {% for sensor in object_list %}
+    <div class="row">
+      <div class="col-md-2">
+              <h4 class="text-center"> Position</h1>
+      </div>
+      <div class="col-md-2">
+             <h4 class="text-center"> {{ sensor.date }} </h4>
+      </div>
+      <div class="col-md-2 ">
+             <h4 class="text-center"> {{ sensor.temperature }} </h4>
+      </div>
+      <div class="col-md-2">
+             <h4 class="text-center"> {{ sensor.humidity }}</h4>
+      </div>
+   {% if sensor.battery %}
+      <div class="col-md-2">
+             <h4 class="text-center"> {{ sensor.battery }} </h4>
+      </div>
+   </div>
+   {% else %}   
+   </div>
+   {% endif %}
+   {% endfor %}
+{% endblock %}

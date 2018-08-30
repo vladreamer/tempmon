@@ -1,0 +1,82 @@
+{% extends "monitor/header.html" %}
+{% block content %}
+
+<div class="row">
+      <div class="col-sm-4 col-sm-offset-3">
+          <a href="/video">
+            <img  src="/camera3" width="320 height="240"  alt="Monitor-3/>  
+          </a>
+      </div>
+</div>
+
+<div class="row">
+      <div class="col-sm-1 col-sm-offset-1">
+              <h4 class="text-left"> Location</h4>
+      </div>
+      <div class="col-sm-2 ">
+             <h4 class="text-center"> Temp. (C)</h4>
+      </div>
+      <div class="col-sm-2">
+             <h4 class="text-center"> Humid.(%)</h4>
+      </div>
+      <div class="col-sm-1">
+             <h4 class="text-center"> Battery</h4>
+      </div>
+      <div class="col-sm-3">
+             <h4 class="text-left"> Last Probe </h4> 
+      </div>
+      <div class="col-sm-2">
+             <h4 class="text-left"> Sensor-Ch.</h4>
+      </div>
+</div>
+{% for sensor in context %}
+<div class="row">
+      <div class="col-sm-1 col-md-offset-1">
+              <a href=mrtg/{{sensor.location}}.html>
+              <h5 class="text-left"> {{sensor.location}} </h5>
+              </a> 
+      </div>
+      <div class="col-sm-2">
+             <a href=mrtg/temp_{{sensor.location}}/temp_{{sensor.location|lower}}.html>
+             <h5 class="text-center"> {{sensor.temp}} </h5>
+             </a>
+      </div>
+     {% if sensor.humid >= 50 %}
+      <div class="col-sm-2 ">
+             <a href=mrtg/hum_{{sensor.location}}/hum_{{sensor.location|lower}}.html>
+             <h5 class="text-center" style="color:red;"> * {{sensor.humid}} *</h5>
+             </a>
+      </div>
+      {% else %} 
+      <div class="col-sm-2">
+             <a href=mrtg/hum_{{sensor.location}}/hum_{{sensor.location|lower}}.html>
+             <h5 class="text-center"> {{sensor.humid}} </h5>
+             </a>
+      </div>
+
+     {% endif %}
+     {% if sensor.battery == 'LOW' %}
+      <div class="col-sm-1">
+             <h5 class="text-center" style="color:red;"> {{sensor.battery}} </h5>
+      </div>
+     {% elif sensor.battery == 'na' %}
+      <div class="col-sm-1">
+             <h5 class="text-center" style="color:blue;"> --- </h5>
+      </div>
+     {% else %}
+      <div class="col-sm-1">
+             <h5 class="text-center"> {{sensor.battery}} </h5>
+      </div>
+     {% endif %}
+      <div class="col-sm-3">
+             <h5 class="text-left"> {{sensor.date}} </h5>
+      </div>
+      <div class="col-sm-2">
+             <a href=sensor/{{sensor.id}}>
+             <h5 class="text-left"> {{sensor.type}}&nbsp;-&nbsp;{{sensor.channel}} </h5>
+             </a> 
+      </div>
+</div>
+{% endfor %}
+{% include "monitor/includes/htmlsnippet.html"%}
+{% endblock %}

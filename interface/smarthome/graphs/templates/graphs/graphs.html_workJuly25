@@ -1,0 +1,10 @@
+{% extends "monitor/header.html" %}
+{% load chartit %}
+
+#{{ charts|load_charts:"cht_t,cht_h" }}
+#{{ tempchart|load_charts:"cont" }}
+
+{% block content %}
+            <div id='cont'>{{ tempchart|load_charts:"cont" }}</div>
+            <div class='spacer'></div>
+{% endblock %}

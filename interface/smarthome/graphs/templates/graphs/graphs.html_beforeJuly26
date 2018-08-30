@@ -1,0 +1,7 @@
+{% extends "monitor/header.html" %}
+{% load chartit %}
+
+{{ charts|load_charts:"cht" }}
+{% block content %}
+            <div id='cht'>{{ charts|load_charts:"cht" }}</div>
+{% endblock %}

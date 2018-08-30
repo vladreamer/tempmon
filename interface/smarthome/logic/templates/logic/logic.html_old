@@ -1,0 +1,9 @@
+{% extends "monitor/header.html" %}
+{% block content %}
+   <!--{% for location in object_list %}
+    <h5>Sensor: {{ location.type }} on channel:  {{ location.channel }} <a href="/logic/{{ location.id }}">  -  {{ location.location }} </a> </h5>
+   {% endfor %}-->
+   {% for sensorprologue in object_list %}
+    <h5> {{ sensorprologue.date }} on channel:  {{ sensorprologue.temperature }}   {{ sensorprologue.humidity }} </h5>
+   {% endfor %}
+{% endblock %}

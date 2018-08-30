@@ -1,0 +1,6 @@
+{% extends "monitor/header.html" %}
+{% load chartit %}
+
+{% block content %}
+            <div id='cont'>{{ tempchart|load_charts:"cont" }}</div>
+{% endblock %}

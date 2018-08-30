@@ -1,0 +1,68 @@
+{% extends "monitor/header.html" %}
+{% block content %}
+   {% for each in summary %}
+   
+<div class="row">
+      {% if each.location %}
+      <div class="col-md-2">
+              <h3 class="text-center"> Location:<font color="red"> {{each.location}}</font></h3>
+      </div>
+      {% elif each.type %}
+      <div class="col-md-2 ">
+             <h3 class="text-center"> Type:<font color="blue"> {{each.type}}</font></h3>
+      </div>
+      {% elif each.channel %}
+      <div class="col-md-2">
+             <h3 class="text-center"> Channel:<font color="blue"> {{each.channel}}</font></h4>
+      </div>
+</div>      
+
+      {% elif each.context %}
+<div class="row">
+      <div class="col-md-2 ">
+             <h4 class="text-center"> Temperature (C)</h4>
+      </div>
+      <div class="col-md-1">
+             <h4 class="text-center"> Humidity (%)</h4>
+      </div>
+      <div class="col-md-2 col-md-offset-1">
+             <h4 class="text-center"> Date </h4>
+      </div>       
+</div>        
+      {% for sensor in each.context %}
+<div class="row">
+      <div class="col-md-2 ">
+             <h5 class="text-center">{{sensor.temperature}}</h5>
+      </div>
+      <div class="col-md-1">
+             <h5 class="text-center">{{sensor.humidity}}</h5>
+      </div>
+      <div class="col-md-2 col-md-offset-1">
+             <h5 class="text-center">{{ sensor.date|date:"D d M Y" }} {{ sensor.date|time:"H:i:s" }}</h5>
+      </div>       
+</div>      
+      {% endfor %}
+
+<div class="row">
+ <div class="col-md-2 col-md-offset-1">
+  <div class="pagination">
+    <span class="step-links">
+          {% if each.context.has_previous %}
+            <a href="?page={{ each.context.previous_page_number }}">previous</a>
+          {% endif %}
+
+        <span class="current">
+            Page {{ each.context.number }} of {{ each.context.paginator.num_pages }}.
+        </span>
+
+          {% if each.context.has_next %}
+            <a href="?page={{ each.context.next_page_number }}">next</a>
+          {% endif %}
+    </span>
+  </div>
+ </div>
+</div>
+
+      {% endif %}
+   {% endfor %}
+{% endblock %}

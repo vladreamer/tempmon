@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Monitor</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+	<link rel="stylesheet" href="{% static 'monitor/css/bootstrap.min.css' %}" type = "text/css"/>
+	<script type="text/javascript" src="{% static 'monitor/js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'static_jquery/js/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/highcharts/highcharts.js' %}"></script>
+  <script type="text/javascript" src="{% static 'chartit/js/chartloader.js' %}"></script>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	
+	<style type="text/css">
+		html,
+		body {
+         padding-top: 25px;
+		     height:100%
+	      	}
+	</style>
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="row" style="padding-top: 10px;">
+        <div class="col-xs-1 col-sm-1 col-sm-offset-1" > 
+            <a href="/">
+               <img src="{% static 'monitor/img/monicon.png' %}" class="responsive-img" style='max-height:30px;' alt="Main"> 
+            </a>
+        </div>
+        <div class="col-xs-1 col-xs-offset-1 col-sm-1" >
+            <a href="/video">
+               <img src="{% static 'monitor/img/video-camera.png' %}" class="responsive-img" style='max-height:30px;' alt="Video"> 
+            </a>
+        </div>
+        <div class="col-xs-1 col-xs-offset-1 col-sm-2" >
+          <a href="/graphs">
+               <img src="{% static 'monitor/img/bar-chart-reload.png' %}" class="responsive-img" style='max-height:30px;' alt="24Hours Graphs"> 
+          </a>
+        </div>
+        <div class="col-xs-5 col-xs-offset-1 col-sm-3 col-sm-offset-1"> 
+             <span  id="hours"></span>
+        </div>    
+        <div class="col-xs-1 col-sm-1">
+             <a href="/accounts/logout/">
+               {{user.get_username}} <span class="glyphicon glyphicon-log-out"></span> 
+             </a>
+        </div>
+                   
+                      <script type="text/javascript">
+
+                       obj_hours=document.getElementById("hours");
+                       name_month=new Array ("Jan.","Feb.","Mar.", "Apr.","May", "June","July","Aug.","Sep.", "Oct.","Nov.","Dec.");
+                       name_day=new Array ("Sun.","Mon.", "Tue.","Wed.","Thu.", "Fri.","Sat.");
+
+                      function wr_hours()
+                        {
+                        time=new Date();
+
+                        time_sec=time.getSeconds();
+                        time_min=time.getMinutes();
+                        time_hours=time.getHours();
+                        time_wr=((time_hours<10)?"0":"")+time_hours;
+                        time_wr+=":";
+                        time_wr+=((time_min<10)?"0":"")+time_min;
+                        time_wr+=":";
+                        time_wr+=((time_sec<10)?"0":"")+time_sec;
+
+                        time_wr=name_day[time.getDay()]+", "+time.getDate()+" "+name_month[time.getMonth()]+" "+time.getFullYear()+" "+time_wr;
+
+                         obj_hours.innerHTML=time_wr; 
+                         }
+
+                         wr_hours();
+                         setInterval("wr_hours();",1000);
+                      </script>
+
+     </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+			<div class='container-fluid'>
+         {% block content %}
+			   {% endblock %}	
+			</div>
+    <footer>
+	<div class="container-fluid" style='margin-left:15px'>
+		<p><a href="#" target="blank">Contact</a> | <a href="#" target="blank">LinkedIn</a> | <a href="#" target="blank">Twitter</a> | <a href="#" target="blank">Google+</a></p>
+       	</div>
+    </footer>	
+	
+</body>
+
+</html>

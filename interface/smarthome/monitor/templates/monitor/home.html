@@ -1,0 +1,105 @@
+{% extends "monitor/header.html" %}
+{% block content %}
+
+<div class="row">
+   <script>
+       function autoRefresh()
+        {
+	window.location = window.location.href;
+         }
+ 
+       setInterval('autoRefresh()', 30000); // this will reload page after every 60 secounds; Method I
+     </script>   
+      <div style="padding: 5px" class="col-sm-3 col-sm-offset-2">
+            <h5 class="text-center"> Snapshoot from Camera1: </h5>
+          <a href="/video">
+             <img src="static/monitor/img/camera1.jpg"class="img-responsive" alt="Monitor-1">
+         </a>
+       </div>
+       <div style="padding: 5px" class="col-sm-3">
+           <h5 class="text-center"> Snapshoot from ServerRoom: </h5>
+          <a href="/video">
+            <img src="static/monitor/img/schlage1.jpg"class="img-responsive" alt="Schlage1">
+          </a>
+       </div>
+       <div style="padding: 5px" class="col-sm-3">
+         <h5 class="text-center"> Snapshoot from Camera3: </h5>
+          <a href="/video">
+            <img src="static/monitor/img/schlage2.jpg"class="img-responsive" alt="Schlage2">
+          </a>
+       </div>
+</div>
+
+
+<div class="row">
+      <div style="padding: 0px" class="col-xs-2 col-sm-1 col-sm-offset-1">
+              <h5 class="text-left">Location</h5>
+      </div>
+      <div style="padding: 0px" class="col-xs-2 col-xs-offset-1 col-sm-2 ">
+             <h5 class="text-center">Temp.(C)</h5>
+      </div>
+      <div style="padding: 0px" class="col-xs-2 col-sm-2">
+             <h5 class="text-center">Humid.(%)</h5>
+      </div>
+      <div style="padding: 0px" class="col-xs-1 col-sm-1">
+             <h5 class="text-center">Battery</h5>
+      </div>
+      <div style="padding: 0px" class="col-xs-1 col-xs-offset-1 col-sm-2">
+             <h5 class="text-left">Probe</h5> 
+      </div>
+      <div style="padding: 0px" class="col-xs-2 col-sm-1">
+             <h5 class="text-left">Sensor-Ch.</h5>
+      </div>
+</div>
+
+{% for sensor in context %}
+<div class="row">
+      <div class="col-xs-2 col-sm-1 col-sm-offset-1" style="padding: 0px">
+              <a href=mrtg/{{sensor.location}}.html>
+              <h6 class="text-left"> {{sensor.location}} </h6>
+              </a> 
+      </div>
+      <div class="col-xs-2 col-xs-offset-1 col-sm-2" style="padding: 0px">
+             <a href=mrtg/temp_{{sensor.location}}/temp_{{sensor.location|lower}}.html>
+             <h6 class="text-center"> {{sensor.temp}} </h6>
+             </a>
+      </div>
+     {% if sensor.humid >= 50 %}
+      <div class="col-xs-2 col-sm-2" style="padding: 0px">
+             <a href=mrtg/hum_{{sensor.location}}/hum_{{sensor.location|lower}}.html>
+             <h6 class="text-center" style="color:red;"> * {{sensor.humid}} *</h6>
+             </a>
+      </div>
+      {% else %} 
+      <div class="col-xs-2 col-sm-2" style="padding: 0px">
+             <a href=mrtg/hum_{{sensor.location}}/hum_{{sensor.location|lower}}.html>
+             <h6 class="text-center"> {{sensor.humid}} </h6>
+             </a>
+      </div>
+
+     {% endif %}
+     {% if sensor.battery == 'LOW' %}
+      <div class="col-xs-1 col-sm-1" style="padding: 0px">
+             <h6 class="text-center" style="color:red;"> {{sensor.battery}} </h6>
+      </div>
+     {% elif sensor.battery == 'na' %}
+      <div class="col-xs-1 col-sm-1" style="padding: 0px">
+             <h6 class="text-center" style="color:blue;"> --- </h6>
+      </div>
+     {% else %}
+      <div class="col-xs-1 col-sm-1" style="padding: 0px">
+             <h6 class="text-center"> {{sensor.battery}} </h6>
+      </div>
+     {% endif %}
+      <div class="col-xs-1 col-xs-offset-1 col-sm-2" style="padding: 0px">
+             <h6 class="text-left"> {{sensor.date|date:"j-M H:i" }} </h6>
+      </div>
+      <div class="col-xs-2 col-sm-1" style="padding: 0px">
+             <a href=sensor/{{sensor.id}}>
+             <h6 class="text-left"> {{sensor.type}}&nbsp;-&nbsp;{{sensor.channel}} </h6>
+             </a> 
+      </div>
+</div>
+{% endfor %}
+{% include "monitor/includes/htmlsnippet.html"%}
+{% endblock %}

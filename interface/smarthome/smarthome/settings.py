@@ -25,7 +25,7 @@ SECRET_KEY = 'l8j-uah5ecw_krftlh*jh84=$ec#x9&b3!5v7^ob-=2ktf=7vl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '10.1.5.6', '10.1.5.7', '10.1.4.64', '10.1.4.65', 'smarthome.ehealthinnovation.org', 'smarthome2.ehealthinnovation.org', 'unenclosed-mole-7124.dataplicity.io']
+ALLOWED_HOSTS = ['127.0.0.1', '10.1.2.89', '10.1.4.64', '10.1.4.65', 'smarthome.ehealthinnovation.org', 'smarthome2.ehealthinnovation.org', 'unenclosed-mole-7124.dataplicity.io']
 
 
 # Application definition
